@@ -60,6 +60,25 @@
 
 <script>
 
+  function playAudio(event){
+    const key = event.keyCode;
+    const audio = document.querySelector(`audio[data-key="${key}"]`);
+    if (!audio) return;
+
+    audio.currentTime = 0;
+    audio.play();
+    document.querySelector(`div[data-key="${key}"]`).classList.add("playing");
+  }
+
+  function stopAudio(event){
+    const el = document.querySelector(`div[data-key="${event.keyCode}"]`);
+    if (!el) return;
+    el.classList.remove("playing");
+  }
+
+  window.addEventListener("keydown", playAudio);
+  window.addEventListener("keyup", stopAudio);
+
 </script>
 
 
