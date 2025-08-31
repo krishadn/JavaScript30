@@ -19,13 +19,29 @@
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
 
-  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+  <img src="fountain.jpg">
 
   <style>
 
     /*
       misc styles, nothing to do with CSS variables
     */
+    :root {
+      --SPACING: 10px;
+      --BLUR: 10px;
+      --BASE: #ffff00;
+    }
+
+    img {
+      padding: var(--SPACING);
+      filter: blur(var(--BLUR));
+      background-color: var(--BASE);
+    }
+
+    .hl {
+      color: var(--BASE);
+    }
+
 
     body {
       text-align: center;
@@ -46,6 +62,21 @@
   </style>
 
   <script>
+
+    function handleInput(e) {
+      document.documentElement.style.setProperty(`--${e.target.id.toUpperCase()}`, `${e.target.value}px`);
+    }
+
+    const spacingControl = document.querySelector("#spacing");
+    const blurControl = document.querySelector("#blur");
+    const colorControl = document.querySelector("#base");
+
+    spacingControl.addEventListener("input", handleInput);
+    blurControl.addEventListener("input", handleInput);
+    colorControl.addEventListener("input", e => {
+      document.documentElement.style.setProperty(`--${e.target.id.toUpperCase()}`, `${e.target.value}`);
+    });
+
   </script>
 
 </body>
