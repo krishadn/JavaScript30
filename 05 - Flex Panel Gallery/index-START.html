@@ -27,6 +27,8 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
     }
 
     .panel {
@@ -44,19 +46,27 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
     }
 
-    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
-    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+    .panel1 { background-image:url(https://images.unsplash.com/photo-1755398104324-c22a39900c96?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); }
+    .panel2 { background-image:url(https://images.unsplash.com/photo-1528155124528-06c125d81e89?q=80&w=689&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); }
     .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
-    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
-    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel4 { background-image:url(https://images.unsplash.com/photo-1756456344764-17fdecd99c2e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3Dttps://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+    .panel5 { background-image:url(https://images.unsplash.com/photo-1755128368298-198903712688?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); }
 
     /* Flex Children */
     .panel > * {
       margin: 0;
       width: 100%;
-      transition: transform 0.5s;
+      transition: transform 0.5s 0.7s;
+      flex: 1 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .panel p {
@@ -70,8 +80,21 @@
       font-size: 4em;
     }
 
+    .panel p:first-child {
+      transform: translateY(-100%);
+    }
+
+    .panel p:last-child {
+      transform: translateY(100%);
+    }
+
     .panel.open {
       font-size: 40px;
+      flex: 5;
+    }
+
+    .panel.open :not(p:nth-child(2)){
+      transform: translateY(0%);
     }
 
   </style>
@@ -106,6 +129,14 @@
   </div>
 
   <script>
+    
+    const panels = document.querySelectorAll(".panel");
+   
+    function openPanel(e) {
+      this.classList.toggle("open");
+    }
+     
+    panels.forEach(p => p.addEventListener("click", openPanel))
 
   </script>
 
