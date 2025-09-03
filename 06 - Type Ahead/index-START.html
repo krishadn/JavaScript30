@@ -18,6 +18,98 @@
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+// Global nodes to modify or add listener to
+const searchBar = document.querySelector(".search");
+const suggestList = document.querySelector(".suggestions");
+const hintItems = document.querySelectorAll(".suggestions li");
+
+// Get location data
+const locData = [];
+
+async function getData() {
+  const rawData = await fetch(endpoint);
+  const jsonData = await rawData.json();
+  locData.push(...jsonData);
+  console.log(locData);
+}
+
+getData();
+
+// Suggestion functions
+function showRes(e) {
+  removeListItems();
+
+  const query = this.value.toLowerCase();
+
+  if (!query) {
+    hintItems.forEach((item) => suggestList.append(item));
+
+  } else {
+    const result = locData.filter(loc => loc.city.toLowerCase().includes(query) || loc.state.toLowerCase().includes(query));
+    result.forEach((loc) => loc.query = query);
+    result.forEach(addListItem);
+  } 
+}
+
+function removeListItems() {
+  while (suggestList.lastElementChild) {
+    suggestList.removeChild(suggestList.lastElementChild);
+  }
+}
+
+function addListItem(loc) {
+  // create span for name  
+  const regex = new RegExp(loc.query, "gi");
+
+  const nameData = document.createElement("span");
+  nameData.classList.add("name");
+  nameData.append(createHighlightSpan(loc.city, regex)); // city with span
+  nameData.append(", ");
+  nameData.append(createHighlightSpan(loc.state, regex)); // state with span
+  
+  // create span for population
+  const popData = document.createElement("span");
+  popData.classList.add("population");
+  const popNum = Number(loc.population).toLocaleString(); 
+  popData.append(popNum);
+
+  // append name and pop spans to list
+  const listItem = document.createElement("li");
+  listItem.append(nameData);
+  listItem.append(popData);
+
+  // append li item to ul
+  suggestList.append(listItem);
+}
+
+function createHighlightSpan(name, regex) {
+  const frag = document.createDocumentFragment();
+  curIndex = 0;
+
+  name.replace(regex, (match, offset) => {
+
+    if (offset > curIndex) {
+      frag.append(name.slice(curIndex, offset));
+    }
+
+    const span = document.createElement("span");
+    span.classList.add("hl");
+    span.append(match);
+    frag.append(span);
+
+    curIndex = offset + match.length;
+  })
+
+  frag.append(name.slice(curIndex));
+
+  return frag;
+}
+
+
+
+// Adding event listener
+searchBar.addEventListener("input", showRes);
+
 </script>
 </body>
 </html>
