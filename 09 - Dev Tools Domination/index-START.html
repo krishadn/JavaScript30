@@ -19,29 +19,67 @@
     }
 
     // Regular
+    console.log("Hello");
 
     // Interpolated
+    // used back ticks instead 
+    const someVar = "world";
+    console.log(`Hello ${someVar}`);
 
     // Styled
+    console.log("%c I am some great text", "font-size: 25px; color: blue; font-family:sans-serif;");
 
     // warning!
+    console.warn("Careful there");
 
     // Error :|
+    console.error("Mali ka!");
 
     // Info
+    console.info("FYI");
 
     // Testing
+    console.assert("a" === "a", "Mali ka nanaman");
 
     // clearing
+    console.clear();
+
 
     // Viewing DOM Elements
+    const p = document.querySelector("p");
+    console.log(p);
+    console.dir(p); 
+    console.clear();
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`That is ${dog.age * 7} years old in dog years`);
+      console.groupEnd(`${dog.name}`);
+
+    })
+
 
     // counting
+    console.count("Blue");
+    console.count("Blue");
+    console.count("Red");
+    console.count("Blue");
+    console.count("Blue");
+    console.count("Red");
+    console.count("Red");
+    console.count("Blue");
+    console.count("Red");
 
     // timing
+    console.time('Fetch dummy json');
+    fetch('https://dummyjson.com/test')
+      .then(data => data.json)
+      .then(data => console.timeEnd('Fetch dummy json'));
 
+    console.table(dogs);
   </script>
 </body>
 </html>
