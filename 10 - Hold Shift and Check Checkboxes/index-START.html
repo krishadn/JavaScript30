@@ -97,6 +97,71 @@
   </div>
 
 <script>
+
+  let lastChecked;
+  let lastUnchecked;
+  let isShiftPressed = false;
+
+  window.onkeydown = e => {if (e.key === "Shift") isShiftPressed = true };
+  window.onkeyup = e => {if (e.key === "Shift") isShiftPressed = false };
+
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(cb => cb.addEventListener("change",handleSelect));
+
+  function handleSelect(e) {
+    const currentSelected = e.target;
+
+    if (currentSelected.checked) {
+
+      console.log(e.shiftKey);
+      if (lastChecked && isShiftPressed) {
+        const parentDiv = Array.from(lastChecked.parentNode.parentNode.children);
+        const direction = (parentDiv.indexOf(lastChecked.parentNode) < parentDiv.indexOf(currentSelected.parentNode))? "down" : "up";
+
+        if (direction === "down") {
+          toggleCheckBetween(lastChecked, currentSelected, true);        
+        } else {
+          toggleCheckBetween(currentSelected, lastChecked, true);        
+        }
+
+      }
+
+      lastChecked = currentSelected;
+
+    } else if (!currentSelected.checked) {
+      if (lastUnchecked && isShiftPressed) {
+        const parentDiv = Array.from(lastUnchecked.parentNode.parentNode.children);
+        const direction = (parentDiv.indexOf(lastUnchecked.parentNode) < parentDiv.indexOf(currentSelected.parentNode))? "down" : "up";
+
+        if (direction === "down") {
+          toggleCheckBetween(lastUnchecked, currentSelected, false);        
+        } else {
+          toggleCheckBetween(currentSelected, lastUnchecked, false);        
+        }
+
+      }
+
+      lastUnchecked = currentSelected;
+
+    }
+    
+  }
+
+
+
+  function toggleCheckBetween(from, to, state) {
+    let nextDiv = from.parentNode;
+    while (true) {
+      nextDiv = nextDiv.nextElementSibling;
+
+      if (nextDiv === to.parentNode) break;
+
+      nextDiv.firstElementChild.checked = state;
+      
+    }
+  }
+
+
 </script>
 </body>
 </html>
