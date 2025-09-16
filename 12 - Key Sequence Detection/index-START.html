@@ -7,6 +7,24 @@
     <link rel="icon" href="https://fav.farm/🔥" />
   </head>
   <body>
-    <script></script>
+    <script>
+
+      const sequence = [];
+      const code = "biscuit";
+
+
+      window.addEventListener('keyup', checkSequence);
+
+
+      function checkSequence(event) {
+        sequence.push(event.key);
+        if (sequence.join("").includes(code)) {
+          console.log("Hello World!");
+          cornify_add();
+        }
+        sequence.splice(-code.length-1,sequence.length-code.length);
+      }
+
+    </script>
   </body>
 </html>
