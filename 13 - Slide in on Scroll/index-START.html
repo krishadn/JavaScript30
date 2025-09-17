@@ -59,6 +59,41 @@
       };
     }
 
+    const images = document.querySelectorAll(".slide-in");
+
+    function checkSlide(event) {
+
+
+      images.forEach(image => {
+
+        const imageHalf = image.offsetTop + (image.height / 2);
+        const viewportBottom = window.scrollY + window.innerHeight;
+        const imageBottom = image.offsetTop + image.height;
+        const isHalfShown = viewportBottom >= imageHalf;
+        const passedBottom = (viewportBottom -  window.innerHeight) > imageBottom;
+        if (isHalfShown && !passedBottom) {
+          image.classList.add("active");
+        } else {
+          image.classList.remove("active");
+        }
+        
+
+      })
+
+
+
+
+
+    }
+
+
+    // window.addEventListener("scroll", checkSlide);
+
+    window.addEventListener("scroll", debounce(checkSlide))
+
+
+
+
   </script>
 
   <style>
