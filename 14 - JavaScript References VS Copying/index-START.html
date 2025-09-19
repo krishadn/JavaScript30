@@ -9,15 +9,50 @@
 
   <script>
     // start with strings, numbers and booleans
+    // let num1 = 100;
+    // let num2 = num1;
+    // console.log(num1);
+    // console.log(num2);
+    // num1 = 200;
+    // console.log(num1);
+    // console.log(num2);
+    // num2 = 300;
+    // console.log(num1);
+    // console.log(num2);
+
+    // let name1 = "Karen";
+    // let name2 = name1;
+    // console.log(name1);
+    // console.log(name2);
+    // name1 = "Andy";
+    // console.log(name1);
+    // console.log(name2);
+    // name2 = "Michael"
+    // console.log(name1);
+    // console.log(name2);
+
+    // let bool1 = true;
+    // let bool2 = bool1;
+    // console.log(bool1);
+    // console.log(bool2);
+    // bool1 = false;
+    // console.log(bool1);
+    // console.log(bool2);
+
+
 
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
+    const team = players;
 
+    // console.log(team, players);
     // You might think we can just do something like this:
+    team[3] = "Phylis";
 
     // however what happens when we update that array?
+    // console.log(team, players);
 
     // now here is the problem!
 
@@ -26,14 +61,27 @@
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
     // So, how do we fix this? We take a copy instead!
-
+    
     // one way
-
+    const team2 = players.slice();
+    
     // or create a new array and concat the old one in
-
+    const team3 = [].concat(players);
+    
     // or use the new ES6 Spread
+    const team4 = [...players];
 
+    const team5 = Array.from(players);
+    
     // now when we update it, the original one isn't changed
+    team2[0] = "Charlie";
+    team3[0] = "Lavina";
+    team4[0] = "Becky";
+    team5[0] = "Kiko";
+
+
+
+    // console.log(players, team, team2, team3, team4, team5);
 
     // The same thing goes for objects, let's say we have a person object
 
@@ -44,12 +92,38 @@
     };
 
     // and think we make a copy:
+    const captain = person;
+
+    // captain.age = 99;
+
+    // console.log(person);
 
     // how do we take a copy instead?
+    const newMe = Object.assign({}, person, {address: "sa puso mo"});
+    console.log(newMe, person);
 
     // We will hopefully soon see the object ...spread
+    const grumpy = {...person};
+    grumpy.mood = "grumpy"
+    console.log(grumpy, person);
 
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+    const sana = {
+      name: "Sana",
+      group: "Twice",
+      socials: {
+        twt: "@sana2x",
+        fb: "\sanaol",
+      }
+    }
+
+    const jihyo = Object.assign({}, sana);
+
+    const nayeon = {...sana};
+
+    const jeongyeon = JSON.parse(JSON.stringify(sana));
+
 
   </script>
 
