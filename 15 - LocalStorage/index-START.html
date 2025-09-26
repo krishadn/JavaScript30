@@ -29,7 +29,80 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem("items")) ?? [];
+
+  addItems.addEventListener("submit", addItem);
+  itemsList.addEventListener("click", handleCheck);
+
+
+  function addItem(event) {
+
+    event.preventDefault();
+
+    const inputText = this.querySelector("[name='item']");
+    const item = {
+      text: inputText.value,
+      done: false
+    }
+    items.push(item);
+    this.reset();
+    populateList(items, itemsList);
+    localStorage.setItem("items", JSON.stringify(items));
+
+
+  }
+
+
+  function populateList(items = [], platesList) {
+
+    clearList(platesList);
+    platesList.append(...items.map(createListItem));
+
+  }
+
+
+  function createListItem(item, index) {
+
+    const listItem = document.createElement("li");
+    const checkBox = document.createElement("input");
+    checkBox.setAttribute("type", "checkbox");
+    checkBox.setAttribute("id", `item${index}`);
+    checkBox.setAttribute("name", `item${index}`);
+    checkBox.setAttribute("data-index", index);
+
+    checkBox.checked = item.done;
+    
+    const label = document.createElement("label");
+    label.setAttribute("for", `item${index}`);
+    label.textContent = item.text;
+
+    listItem.append(checkBox, label);
+
+    return listItem;
+
+  }
+
+  function clearList(platesList) {
+
+    while (platesList.lastChild) {
+      platesList.lastChild.remove();
+    }
+
+  }
+
+  function handleCheck(event) {
+
+    if (event.target.tagName !== "INPUT") return;
+
+    const index = +event.target.dataset.index;
+    items[index].done = !items[index].done;
+    localStorage.setItem("items", JSON.stringify(items));
+    
+  }
+
+
+  populateList(items, itemsList);
+
 
 </script>
 
