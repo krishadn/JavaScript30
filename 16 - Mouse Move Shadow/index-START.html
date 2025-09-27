@@ -36,6 +36,37 @@
   </style>
 
 <script>
+
+
+
+  window.addEventListener("mousemove", adjustShadow);
+
+
+  function adjustShadow(event) {
+    const heading = document.querySelector("h1");
+
+    const rangeX = 100;
+    const multiplierX = event.clientX / window.visualViewport.width;
+
+
+    const rangeY = 100;
+    const multiplierY = event.clientY / window.visualViewport.height;
+
+
+    const offsetX = Math.round((rangeX*multiplierX) - (rangeX / 2));
+    const offsetY = Math.round((rangeY*multiplierY) - (rangeY / 2));
+
+    heading.style.textShadow = `${offsetX}px ${offsetY}px 0 rgba(220, 20, 248,1),
+                                ${-offsetX}px ${offsetY}px 0 rgba(251, 158, 108,1),
+                                ${offsetX}px ${-offsetY}px 0 rgba(250, 205, 74,1),
+                                ${-offsetX}px ${-offsetY}px 0 rgba(147, 78, 193,1)`
+
+  }
+
+
+
+
+
 </script>
 </body>
 </html>
