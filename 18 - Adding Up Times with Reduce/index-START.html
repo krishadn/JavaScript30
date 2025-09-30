@@ -183,6 +183,25 @@
     </li>
   </ul>
 <script>
+  const times = document.querySelectorAll("[data-time]");
+
+  // assumes that all durations are below an hour
+  const totalTime = Array.from(times).reduce((acc, time, i) => {
+
+    const timeString = time.dataset.time;
+    const [curMin, curSec] = timeString.split(":");
+    let newSec = +curSec + acc.sec;
+    let newMin = Math.floor(newSec/60) + +curMin + acc.min;
+    newSec %= 60;
+    let newHr = Math.floor(newMin/60) + acc.hour;
+    newMin %= 60; 
+
+    return {hour: newHr, min: newMin, sec: newSec};
+
+  }, {hour:0,min:0,sec:0})
+
+  console.log(totalTime);
+
 </script>
 </body>
 </html>
