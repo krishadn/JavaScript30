@@ -28,6 +28,37 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    const links = document.querySelectorAll("a");
+    const highlight = document.createElement("span");
+    highlight.classList.add("highlight");
+    document.body.append(highlight);
+
+    links.forEach(link => {
+      link.addEventListener("mouseover", moveHighlight)
+    })
+
+    function moveHighlight(event) {
+
+      // was'nt able to use getBoundingClientRect()
+      
+      const element = event.target;
+      const width = element.offsetWidth;
+      const height = element.offsetHeight;
+
+      const xStart = event.pageX - event.offsetX;
+      const yStart = event.pageY - event.offsetY;
+
+      console.log([width, height, xStart, yStart]);
+
+      const highlight = document.querySelector(".highlight");
+      highlight.style.width = `${width}px`;
+      highlight.style.height = `${height}px`;
+      highlight.style.transform = `translate(${xStart}px, ${yStart}px)`;
+      
+    }
+
+
   </script>
 </body>
 </html>
